@@ -12,24 +12,17 @@ import Contact from './pages/Contact';
 import AdminPortal from './pages/AdminPortal';
 
 function App() {
+  console.log("Rendering App component...");
+
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/join-us" element={<JoinUs />} />
-            <Route path="/sponsors" element={<Sponsors />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<AdminPortal />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        {/* other routes */}
+      </Routes>
+      <Footer />
     </Router>
   );
 }
