@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 type LoginForm = {
@@ -10,13 +10,26 @@ const AdminPortal: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
 
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn');
+    if (loggedInStatus === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const onSubmit = (data: LoginForm) => {
-    // In a real application, you would validate credentials against a backend
+    // In a real application, credentials should be validated against a backend
     if (data.username === 'adpengineering' && data.password === 'TaylorsADP2024!') {
       setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', 'true');
     } else {
       alert('Invalid credentials');
     }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
   };
 
   if (!isLoggedIn) {
@@ -55,15 +68,18 @@ const AdminPortal: React.FC = () => {
     );
   }
 
-  // Render the admin dashboard after a successful login
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold mb-4">Welcome to the Admin Dashboard</h2>
-      {/* Placeholder for admin actions, e.g., manage events, sponsors, etc. */}
       <p className="mb-4">Here you can manage events, sponsors, team members, and more.</p>
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Logout
+      </button>
     </div>
   );
 };
 
 export default AdminPortal;
-
