@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -11,6 +10,7 @@ import JoinUs from './pages/JoinUs';
 import Sponsors from './pages/Sponsors';
 import Contact from './pages/Contact';
 import AdminPortal from './pages/AdminPortal';
+
 function App() {
   return (
     <Router>
@@ -33,5 +33,5 @@ function App() {
     </Router>
   );
 }
-export default App;
+
 export default App;
