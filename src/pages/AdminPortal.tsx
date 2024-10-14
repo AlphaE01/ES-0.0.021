@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { Tabs, Tab, Button, Form, Modal } from 'react-bootstrap';
 
 type LoginForm = {
   username: string;
@@ -8,6 +9,10 @@ type LoginForm = {
 
 const AdminPortal: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activeTab, setActiveTab] = useState('events');
+  const [showAddEventModal, setShowAddEventModal] = useState(false);
+  const [showAddTeamMemberModal, setShowAddTeamMemberModal] = useState(false);
+
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
 
   useEffect(() => {
@@ -70,16 +75,89 @@ const AdminPortal: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold mb-4">Welcome to the Admin Dashboard</h2>
-      <p className="mb-4">Here you can manage events, sponsors, team members, and more.</p>
-      <button
+      <h2 className="text-3xl font-bold mb-4">Admin Dashboard</h2>
+      <Button
         onClick={handleLogout}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
       >
         Logout
-      </button>
+      </Button>
+      
+      <Tabs
+        activeKey={activeTab}
+        onSelect={(k) => setActiveTab(k || 'events')}
+        className="mb-4"
+      >
+        <Tab eventKey="events" title="Manage Events">
+          <Button variant="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>
+          {/* Event management table goes here */}
+        </Tab>
+        
+        <Tab eventKey="team" title="Manage Team Members">
+          <Button variant="primary" onClick={() => setShowAddTeamMemberModal(true)}>Add Team Member</Button>
+          {/* Team members management table goes here */}
+        </Tab>
+        
+        <Tab eventKey="sponsors" title="Manage Sponsors">
+          <Button variant="primary">Add Sponsor</Button>
+          {/* Sponsor management table goes here */}
+        </Tab>
+      </Tabs>
+
+      {/* Modal for adding an event */}
+      <Modal show={showAddEventModal} onHide={() => setShowAddEventModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Event</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="eventName">
+              <Form.Label>Event Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter event name" />
+            </Form.Group>
+            <Form.Group controlId="eventDate">
+              <Form.Label>Event Date</Form.Label>
+              <Form.Control type="date" />
+            </Form.Group>
+            <Form.Group controlId="eventDescription">
+              <Form.Label>Event Description</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Add Event
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal for adding a team member */}
+      <Modal show={showAddTeamMemberModal} onHide={() => setShowAddTeamMemberModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Team Member</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="teamMemberName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter name" />
+            </Form.Group>
+            <Form.Group controlId="teamMemberRole">
+              <Form.Label>Role</Form.Label>
+              <Form.Control type="text" placeholder="Enter role" />
+            </Form.Group>
+            <Form.Group controlId="teamMemberImage">
+              <Form.Label>Upload Image</Form.Label>
+              <Form.Control type="file" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Add Team Member
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
 
 export default AdminPortal;
+
