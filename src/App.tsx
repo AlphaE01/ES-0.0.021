@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
@@ -10,21 +11,27 @@ import JoinUs from './pages/JoinUs';
 import Sponsors from './pages/Sponsors';
 import Contact from './pages/Contact';
 import AdminPortal from './pages/AdminPortal';
-
 function App() {
-  console.log("Rendering App component...");
-
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        {/* other routes */}
-      </Routes>
-      <Footer />
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/join-us" element={<JoinUs />} />
+            <Route path="/sponsors" element={<Sponsors />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admin" element={<AdminPortal />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }
-
+export default App;
 export default App;
