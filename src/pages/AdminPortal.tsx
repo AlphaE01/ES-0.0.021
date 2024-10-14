@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Tabs, Tab, Button, Form, Modal } from 'react-bootstrap';
 
 type LoginForm = {
   username: string;
@@ -76,88 +75,72 @@ const AdminPortal: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold mb-4">Admin Dashboard</h2>
-      <Button
+      <button
         onClick={handleLogout}
         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
       >
         Logout
-      </Button>
+      </button>
       
-      <Tabs
-        activeKey={activeTab}
-        onSelect={(k) => setActiveTab(k || 'events')}
-        className="mb-4"
-      >
-        <Tab eventKey="events" title="Manage Events">
-          <Button variant="primary" onClick={() => setShowAddEventModal(true)}>Add Event</Button>
+      <div className="flex space-x-4 mb-4">
+        <button
+          onClick={() => setActiveTab('events')}
+          className={`py-2 px-4 rounded ${activeTab === 'events' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+        >
+          Manage Events
+        </button>
+        <button
+          onClick={() => setActiveTab('team')}
+          className={`py-2 px-4 rounded ${activeTab === 'team' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+        >
+          Manage Team Members
+        </button>
+        <button
+          onClick={() => setActiveTab('sponsors')}
+          className={`py-2 px-4 rounded ${activeTab === 'sponsors' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+        >
+          Manage Sponsors
+        </button>
+      </div>
+
+      {activeTab === 'events' && (
+        <div>
+          <button
+            onClick={() => setShowAddEventModal(true)}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+          >
+            Add Event
+          </button>
           {/* Event management table goes here */}
-        </Tab>
-        
-        <Tab eventKey="team" title="Manage Team Members">
-          <Button variant="primary" onClick={() => setShowAddTeamMemberModal(true)}>Add Team Member</Button>
+        </div>
+      )}
+
+      {activeTab === 'team' && (
+        <div>
+          <button
+            onClick={() => setShowAddTeamMemberModal(true)}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+          >
+            Add Team Member
+          </button>
           {/* Team members management table goes here */}
-        </Tab>
-        
-        <Tab eventKey="sponsors" title="Manage Sponsors">
-          <Button variant="primary">Add Sponsor</Button>
+        </div>
+      )}
+
+      {activeTab === 'sponsors' && (
+        <div>
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+          >
+            Add Sponsor
+          </button>
           {/* Sponsor management table goes here */}
-        </Tab>
-      </Tabs>
+        </div>
+      )}
 
-      {/* Modal for adding an event */}
-      <Modal show={showAddEventModal} onHide={() => setShowAddEventModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Event</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="eventName">
-              <Form.Label>Event Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter event name" />
-            </Form.Group>
-            <Form.Group controlId="eventDate">
-              <Form.Label>Event Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-            <Form.Group controlId="eventDescription">
-              <Form.Label>Event Description</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Add Event
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-
-      {/* Modal for adding a team member */}
-      <Modal show={showAddTeamMemberModal} onHide={() => setShowAddTeamMemberModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Team Member</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="teamMemberName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter name" />
-            </Form.Group>
-            <Form.Group controlId="teamMemberRole">
-              <Form.Label>Role</Form.Label>
-              <Form.Control type="text" placeholder="Enter role" />
-            </Form.Group>
-            <Form.Group controlId="teamMemberImage">
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Add Team Member
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      {/* Modal components can be added similarly with simple HTML/CSS without react-bootstrap */}
     </div>
   );
 };
 
 export default AdminPortal;
-
